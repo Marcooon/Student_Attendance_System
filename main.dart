@@ -3,7 +3,7 @@ import 'student.dart';
 import 'attendance.dart';
 
 void main() {
-  List<Student> students = [];
+  List<Student> students = loadStudents();
 
   while (true) {
     print("\n=== Student Attendance System ===");
@@ -29,7 +29,8 @@ void main() {
         deleteStudent(students);
         break;
       case '5':
-        print("Exiting program...");
+        saveStudents(students);
+        print("Records saved. Goodbye!");
         return;
       default:
         print("Invalid choice. Try again.");

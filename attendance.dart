@@ -1,5 +1,22 @@
 import 'dart:io';
+import 'dart:convert';
 import 'student.dart';
+
+void saveStudents(List<Student> students) {
+  final file = File('students.json');
+  final data = students.map((s) => {
+    'name': s.name,
+    'attendance': s.attendance
+  }).toList();
+  file.writeAsStringSync(jsonEncode(data));
+}
+
+List<Student> loadStudents() {
+  final file = File('students.json');
+  if (!file.existsSync()) return [];
+  final data = jsonDecode(file.readAsStringSync()) as List;
+  return data.map((s) => Student(s['name'], attendance: s['attendance'])).toList();
+}
 
 void addStudent(List<Student> students) {
   stdout.write("Enter student name: ");
@@ -37,7 +54,7 @@ void updateAttendance(List<Student> students) {
   } else {
     print("Invalid student number.");
   }
-}
+} 
 
 void deleteStudent(List<Student> students) {
   viewStudents(students);
